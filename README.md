@@ -42,3 +42,7 @@ npm test                    # unit tests (Groq is mocked)
 2. In Vercel: **Add New → Project → Import** that repo. The framework preset is **Other**. Leave the build command empty.
 3. Under **Environment Variables**, add `GROQ_API_KEY`. You can also add `GROQ_MODEL`.
 4. Deploy. If you change the variables later, redeploy for them to take effect.
+
+## Standalone artifact version
+
+`artifact/orbit-chatbot.html` is a single-file version published as a Claude artifact. It has the same design but gets its replies from Claude through the artifact runtime instead of Groq, so it only works when opened inside Claude. Vercel doesn't serve it; the deployed app is everything in `public/` plus `api/chat.js`.
