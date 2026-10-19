@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Orbit — AI Chat</title>
+  <meta name="description" content="Orbit is a general-purpose AI chatbot." />
+  <meta name="color-scheme" content="dark light" />
+  <link rel="icon" href="/assets/robot.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script>
+    // Apply saved theme before paint to avoid a flash.
+    try {
+      var t = localStorage.getItem("orbit-theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#composer-input">Skip to message box</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span class="brand-name">ORBIT</span>
+      <span class="label brand-tag">AI&nbsp;CHAT</span>
+    </div>
+    <div class="topbar-actions">
+      <button type="button" class="btn btn-ghost" id="new-chat">
+        <span aria-hidden="true">+</span> New chat
+      </button>
+      <button type="button" class="btn btn-icon" id="theme-toggle" aria-label="Switch to light theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="scene" aria-label="Orbit">
+      <div class="scene-inner">
+        <div class="orbit-ring" aria-hidden="true"></div>
+        <div class="speech" role="note">
+          <span class="label speech-label">ORBIT://</span>
+          <p>Hey, I’m Orbit. What’s on your mind?</p>
+        </div>
+        <img class="robot" src="/assets/robot.png" alt="Orbit, a round blue robot wearing a headset" width="450" height="450" />
+      </div>
+      <p class="label scene-caption">GENERAL&nbsp;PURPOSE · ASK ANYTHING</p>
+    </section>
+
+    <section class="chat" aria-label="Conversation">
+      <div class="messages" id="messages" role="log" aria-live="polite" aria-relevant="additions" tabindex="0">
+        <div class="empty" id="empty-state">
+          <p class="label">START HERE</p>
+          <h1>Ask, write, brainstorm or learn.</h1>
+          <p class="empty-sub">Pick a suggestion or type your own question.</p>
+          <ul class="suggestions" id="suggestions">
+            <li><button type="button" class="chip">Explain black holes like I’m 12</button></li>
+            <li><button type="button" class="chip">Brainstorm 5 names for a coffee cart</button></li>
+            <li><button type="button" class="chip">Write a friendly out-of-office email</button></li>
+            <li><button type="button" class="chip">What’s the difference between RAM and storage?</button></li>
+          </ul>
+        </div>
+      </div>
+
+      <form class="composer" id="composer" novalidate>
+        <label class="sr-only" for="composer-input">Message Orbit</label>
+        <textarea id="composer-input" rows="1" maxlength="4000" placeholder="Message Orbit…" autocomplete="off" aria-describedby="composer-hint"></textarea>
+        <button type="submit" class="btn btn-send" id="send" aria-label="Send message">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="label composer-hint" id="composer-hint">
+          <span>ENTER to send · SHIFT+ENTER for new line</span>
+          <span id="char-count">0/4000</span>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
