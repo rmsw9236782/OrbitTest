@@ -74,10 +74,16 @@ export default async function handler(req, res) {
     return sendJson(res, 405, { error: "Method not allowed." });
   }
 
-  const apiKey = process.env.GROQ_API_KEY;
+  const apiKey = (process.env.GROQ_API_KEY || "").trim();
   if (!apiKey) {
+    // Names only, never values: helps spot a misspelled or misplaced variable.
+    const similar = Object.keys(process.env).filter((k) => /groq/i.test(k));
+    const where = process.env.VERCEL_ENV ? ` (Vercel environment: ${process.env.VERCEL_ENV})` : "";
+    const seen = similar.length
+      ? ` Variables found with GROQ in the name: ${similar.map((k) => JSON.stringify(k)).join(", ")}.`
+      : " No variables with GROQ in the name were found.";
     return sendJson(res, 500, {
-      error: "The server is missing GROQ_API_KEY. Add it as an environment variable and redeploy.",
+      error: `The server is missing GROQ_API_KEY${where}.${seen} Add it as an environment variable and redeploy.`,
     });
   }
 
